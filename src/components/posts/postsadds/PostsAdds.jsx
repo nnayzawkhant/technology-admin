@@ -6,8 +6,6 @@ import './postadds.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { axiosAuth, axiosAuthUpload } from "../../../config/axios";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import img from '../../../assets/img/spinner.gif';
 import { API_URLS } from "../../../config/url";
 
