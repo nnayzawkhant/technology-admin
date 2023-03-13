@@ -837,7 +837,7 @@
   "resolved" "https://registry.npmjs.org/formik-yup/-/formik-yup-0.0.5.tgz"
   "version" "0.0.5"
 
-"formik@^2.x":
+"formik@^2.2.9", "formik@^2.x":
   "integrity" "sha512-LQLcISMmf1r5at4/gyJigGn0gOwFbeEAlji+N9InZF6LIMXnFNkO42sCI8Jt84YZggpD4cPWObAZaxpEFtSzNA=="
   "resolved" "https://registry.npmjs.org/formik/-/formik-2.2.9.tgz"
   "version" "2.2.9"
