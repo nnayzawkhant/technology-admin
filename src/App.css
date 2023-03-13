@@ -38,3 +38,11 @@ a{
 .main_layout{
   margin-left: 270px;
 }
+
+.App #light{
+  background-color: #fff;
+}
+
+.App #dark {
+  background-color: #000;
+}

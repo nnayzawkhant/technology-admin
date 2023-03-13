@@ -1,7 +1,13 @@
 import React from 'react'
 import './profile.css';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/category')
+  }
   return (
     <div className="details__form">
           <h2 className="profile__title">Profile</h2>
@@ -22,7 +28,7 @@ const Profile = () => {
               </button>
 
               <div className="profile__img-btns">
-                <button className="dlt__btn">Delete</button>
+                <button className="dlt__btn" onClick={() => handleClick}>Cannel</button>
                 <button className="update__btn">Update</button>
               </div>
           </div>
