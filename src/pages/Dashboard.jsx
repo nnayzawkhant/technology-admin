@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { axiosAuth, axiosAuthUpload } from '../config/axios';
 import CategoryIcon from '@mui/icons-material/Category';
 import axios from 'axios';
+import { API_URLS } from '../config/url';
 
 
 
@@ -17,18 +18,18 @@ const Dashboard = () => {
   const [allCategories, setAllCategories] = useState([]);
 
   const fetchAllUsers = async () => {
-    const fetchuser = await (await axiosAuthUpload().get('http://localhost:5000/v1/users')).data;
+    const fetchuser = await (await axiosAuthUpload().get(API_URLS + 'users')).data;
 
     setAllUsers(fetchuser)
   }
 
   const fetchAllPosts = async () => {
-    const fetchpost = await (await axiosAuthUpload().get('http://localhost:5000/v1/posts')).data;
+    const fetchpost = await (await axiosAuthUpload().get(API_URLS + 'posts')).data;
     setAllPosts(fetchpost)
   }
 
   const fetchAllCategories = async () => {
-    const fetchcategory = await (await axiosAuth().get('http://localhost:5000/v1/categories')).data;
+    const fetchcategory = await (await axiosAuth().get(API_URLS + 'categories')).data;
     setAllCategories(fetchcategory)
   }
 
