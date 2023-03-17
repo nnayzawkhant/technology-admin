@@ -21,6 +21,7 @@ const PostsEdit = () => {
     photo: "",
     desc: '',
     category: '',
+    summary: '',
   });
   
   const { id } = useParams();
@@ -64,6 +65,7 @@ const PostsEdit = () => {
             title: post?.title,
             desc: desc,
             category: post?.category,
+            summary: post?.summary,
             photo: url
           }
           const resultpost = await axiosAuthUpload().patch(API_URLS + `posts/${id}`, newPost)
@@ -94,6 +96,7 @@ const PostsEdit = () => {
     const onDescriptionChange = (e) => {
       setPost({...post, desc: e})
     }
+    console.log(desc)
     
   return (
     <>
@@ -106,12 +109,23 @@ const PostsEdit = () => {
           <form onSubmit={ e => onSubmit(e) }>
               <div className="form__text">
               <div>
-                  <label>Name</label>
+                  <label>Title</label>
                   <input 
                       type="text" 
                       placeholder="Title" 
                       name="title"
                       value={post.title}
+                      onChange={ e => onInputChange(e) }
+                  />
+              </div>
+
+              <div>
+                  <label>Summary</label>
+                  <input 
+                      type="text" 
+                      placeholder="Summary" 
+                      name="summary"
+                      value={post.summary}
                       onChange={ e => onInputChange(e) }
                   />
               </div>
@@ -122,7 +136,7 @@ const PostsEdit = () => {
               <div>
                   <label>Category</label>
                   
-                  <select   value={post.category} onChange={onInputChange}>
+                  <select name="category"   value={post?.category} onChange={onInputChange}>
                     {
                       categories?.results?.map((cat, c) => (
                         <option value={cat.id} key={c}>{cat.categoryname}</option>

@@ -21,6 +21,7 @@ const PostsAdds = () => {
     photo: "",
     desc:"",
     category: '',
+    summary: '',
   });
 
   const onInputChange = (e) => {
@@ -53,6 +54,7 @@ const PostsAdds = () => {
           title: post?.title,
           desc: post?.desc,
           category: post?.category,
+          summary: post?.summary,
           photo: url,
         }
 
@@ -97,20 +99,23 @@ const PostsAdds = () => {
                 <label>Title</label>
                 <input 
                     type="text" 
-                    placeholder="Name" 
+                    placeholder="Title" 
                     name="title"
                     value={post?.title}
                     onChange={ e => onInputChange(e) }
                 />
             </div>
 
-            {/* <div>
-                <label>Date</label>
+            <div>
+                <label>Summary</label>
                 <input 
-                    type="date" 
-                    placeholder="Enter Your Password" 
-                  />
-            </div> */}
+                    type="text" 
+                    placeholder="Summary" 
+                    name="summary"
+                    value={post?.summary}
+                    onChange={ e => onInputChange(e) }
+                />
+            </div>
             </div>
 
             <div className="form__text">

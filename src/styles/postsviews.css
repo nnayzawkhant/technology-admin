@@ -4,10 +4,36 @@
   padding: 20px;
 }
 
+.table__wrapper{
+  width: 100%;
+}
+
+.post-title{
+  width: 50%;
+}
+
+.post-img{
+  width: 20%;
+}
+
+.post-dat{
+  width: 20%;
+}
+
+.post-cat{
+  width: 15%;
+}
+
+.post-act{
+  width: 15%;
+}
+
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+  border: 1px solid #ddd;
+  overflow-x: auto;
   }
   
   td, th {
@@ -21,6 +47,7 @@ table {
   }
 
   td{
+    display: table-cell;
     border-bottom: 1px solid #ccc;
     color: #6c757d;
   }

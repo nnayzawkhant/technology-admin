@@ -66,10 +66,10 @@ const Category = () => {
         </div>
       <table>
         <tr>
-            <th>Category</th>
-            <th>TotalPosts</th>
-            <th>Date</th>
-            <th>Action</th>
+            <th className='post-title'>Category</th>
+            <th className='post-img'>TotalPosts</th>
+            <th className='post-dat'>Date</th>
+            <th className='post-act'>Action</th>
         </tr>
         {
             categories?.results?.map((item, i) => {

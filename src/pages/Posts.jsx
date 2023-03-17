@@ -72,18 +72,19 @@ const Posts = () => {
             
             <div className='search_box'>
                 
-                <input type='text' placeholder='Search...' value={query} onChange={searchInput}/>
+                <input type='text' placeholder='Search Title...' value={query} onChange={searchInput}/>
                 <SearchIcon className='search_box_icon'/>
             </div>
             <button onClick={handleClick}>Add Post</button>
         </div>
-      <table>
+        <div className='table__wrapper'>
+      <table className='fl-table'>
         <tr>
-            <th>Title</th>
-            <th>Image</th>
-            <th>Categories</th>
-            <th>Date</th>
-            <th>Action</th>
+            <th className='post-title'>Title</th>
+            <th className='post-img'>Image</th>
+            <th className='post-cat'>Categories</th>
+            <th className='post-dat'>Date</th>
+            <th className='post-act'>Action</th>
         </tr>
         {
             posts?.results?.map((item, i) => {
@@ -113,6 +114,7 @@ const Posts = () => {
             })
         }
     </table>
+    </div>
         <div className='page__btn'>
             <button className='btn_pag' disabled={1 >= page} onClick={() => handlePrev()}><KeyboardArrowLeftIcon/></button>
             <span className='page__span'>{posts.page}/{posts.totalPages}</span>

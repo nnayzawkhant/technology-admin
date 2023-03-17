@@ -74,11 +74,11 @@ const Users = () => {
         </div>
       <table>
         <tr>
-            <th>UserName</th>
-            <th>ProfilePic</th>
-            <th>Email</th>
-            <th>Date</th>
-            <th>Action</th>
+            <th className='post-title'>UserName</th>
+            <th className='post-img'>ProfilePic</th>
+            <th className='post-cat'>Email</th>
+            <th className='post-dat'>Date</th>
+            <th className='post-act'>Action</th>
         </tr>
         {
             users?.results?.map((item, i) => {

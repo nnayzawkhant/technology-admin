@@ -1,1 +1,1 @@
-export const API_URLS = 'http://localhost:5000/v1/'
+export const API_URLS = 'https://nayzawkhant.codingburma.com/v1/'
