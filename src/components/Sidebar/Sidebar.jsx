@@ -62,7 +62,7 @@ const Sidebar = () => {
         <nav className='nav'> 
           <div>
             <div className='toggle' onClick={() => setShow(!show)}>
-              {show ? <div className='public'><h1>Anyar</h1></div> : <MenuIcon/>}
+              {show ? <div className='public'><h1>Rumor News</h1></div> : <MenuIcon/>}
             </div>  
             <div className='nav-list'>
               <NavLink to='/admin/dashboard' className={cl => cl.isActive ? 'nav-link nav__active' : 'nav-link' }>
