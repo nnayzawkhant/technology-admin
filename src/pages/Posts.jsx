@@ -11,9 +11,11 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import SearchIcon from '@mui/icons-material/Search';
 import { API_URLS } from '../config/url';
 import {format} from "timeago.js";
+import img from '../assets/img/spinner.gif';
 
 const Posts = () => {
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false)
     const [query, setQuery] = useState("");
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
@@ -26,14 +28,21 @@ const Posts = () => {
 
 
     const loadPosts = async () => {
-        let param = `posts?sortBy=_id:desc&page=${page}&limit=4`
-        if(query){
-            param += `&title=${query}`
+        setLoading(true)
+        try {
+            let param = `posts?sortBy=_id:desc&page=${page}&limit=4`
+            if(query){
+                param += `&title=${query}`
+            }
+            const result = await (await axiosAuth().get(API_URLS + param)).data;
+            console.log(result)
+            setPage(result?.page)
+            setPosts(result);
+            setLoading(false)
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
         }
-        const result = await (await axiosAuth().get(API_URLS + param)).data;
-        console.log(result)
-        setPage(result?.page)
-        setPosts(result);
     };
 
     const deletePost = async (id) => {
@@ -87,32 +96,38 @@ const Posts = () => {
             <th className='post-act'>Action</th>
         </tr>
         {
-            posts?.results?.map((item, i) => {
-                return (
-                    <tr key={i}>
-                        <td>{item.title}</td>
-                        <td><img src={item.photo}/></td>
-                        <td>
-                            {item.category.categoryname}
-                        </td>
-                        
-                        <td>
-                        {format(item.createdAt)}
-                        </td>
-                        <td>
-                            <div className='post__icon'>
-                                <Link to={`/admin/posts/postsedits/${item.id}`}>
-                                    <EditIcon className='edit'/>
-                                </Link>
-                                <DeleteIcon onClick={() => deletePost(item.id)} className='delete'/>
-                            </div>
-                        </td>
-                       
-                    </tr>
-                    
-                )
-            })
+            loading ? (<div className="img__use"><img src={img} className="user__img"/></div>) : 
+            (<>
+                {
+                    posts?.results?.map((item, i) => {
+                        return (
+                            <tr key={i}>
+                                <td>{item.title}</td>
+                                <td><img src={item.photo}/></td>
+                                <td>
+                                    {item.category.categoryname}
+                                </td>
+                                
+                                <td>
+                                {format(item.createdAt)}
+                                </td>
+                                <td>
+                                    <div className='post__icon'>
+                                        <Link to={`/admin/posts/postsedits/${item.id}`}>
+                                            <EditIcon className='edit'/>
+                                        </Link>
+                                        <DeleteIcon onClick={() => deletePost(item.id)} className='delete'/>
+                                    </div>
+                                </td>
+                            
+                            </tr>
+                            
+                        )
+                    })
+                }
+            </>)
         }
+        
     </table>
     </div>
         <div className='page__btn'>

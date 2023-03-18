@@ -12,6 +12,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import SearchIcon from '@mui/icons-material/Search';
 import { API_URLS } from '../config/url';
 import {format} from "timeago.js";
+import img from '../assets/img/spinner.gif';
 
 
 
@@ -19,7 +20,8 @@ import {format} from "timeago.js";
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [page, setPage] = useState(1);
-    const [query, setQuery] = useState("")
+    const [query, setQuery] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,13 +29,20 @@ const Users = () => {
     }, [page, query]);
 
     const loadUsers = async () => {
-        let param = `users?sortBy=_id:desc&page=${page}&limit=4`
-        if(query){
-            param += `&name=${query}`
+        setLoading(true)
+        try {
+            let param = `users?sortBy=_id:desc&page=${page}&limit=4`
+            if(query){
+                param += `&name=${query}`
+            }
+            const result = await (await axiosAuth().get(API_URLS + param)).data;
+            setPage(result?.page);
+            setUsers(result);
+            setLoading(false)
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
         }
-        const result = await (await axiosAuth().get(API_URLS + param)).data;
-        setPage(result?.page);
-        setUsers(result);
     };
 
     const deleteUser = async (id) => {
@@ -81,28 +90,33 @@ const Users = () => {
             <th className='post-act'>Action</th>
         </tr>
         {
-            users?.results?.map((item, i) => {
-                return (
-                    <tr key={i}>
-                        <td>{item.name}</td>
-                        <td><img src={item.profilePic}/></td>
-                        <td>
-                            {item.email}
-                        </td>
-                        <td>
-                            {format(item.createdAt)}
-                        </td>
-                        <td>
-                            <div className='post__icon'>
-                                <Link to={`/admin/users/usersedit/${item.id}`}>
-                                    <EditIcon className='edit'/>
-                                </Link>
-                                <DeleteIcon onClick={() => deleteUser(item.id)} className='delete'/>
-                            </div>
-                        </td>
-                    </tr>
-                )
-            })
+            loading ? (<div className="img__use"><img src={img} className="user__img"/></div>) : 
+            (<>
+                {
+                    users?.results?.map((item, i) => {
+                        return (
+                            <tr key={i}>
+                                <td>{item.name}</td>
+                                <td><img src={item.profilePic}/></td>
+                                <td>
+                                    {item.email}
+                                </td>
+                                <td>
+                                    {format(item.createdAt)}
+                                </td>
+                                <td>
+                                    <div className='post__icon'>
+                                        <Link to={`/admin/users/usersedit/${item.id}`}>
+                                            <EditIcon className='edit'/>
+                                        </Link>
+                                        <DeleteIcon onClick={() => deleteUser(item.id)} className='delete'/>
+                                    </div>
+                                </td>
+                            </tr>
+                        )
+                    })
+                }
+            </>)
         }
     </table>
         <div className='page__btn'>

@@ -1,76 +1,72 @@
-import React, { useState, useEffect  } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import './login.css'
+import {Formik, Field, Form, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
+import './login.css';
 import img from '../assets/img/spinner.gif';
 
-import { login } from "../redux/slices/authSlice";
-import { clearMessage } from "../redux/slices/messageSlice";
+import {login} from '../redux/slices/authSlice';
+import {clearMessage} from '../redux/slices/messageSlice';
 
 const Login = () => {
-  let navigate = useNavigate();
+  let navigate = useNavigate ();
 
-  const [type, setType]=useState('password');
-  const [icon, setIcon]=useState(<VisibilityOffIcon/>);
+  const [type, setType] = useState ('password');
+  const [icon, setIcon] = useState (<VisibilityOffIcon />);
 
-  const handleToggle=()=>{    
-		if(type==='password'){
-		setIcon(<RemoveRedEyeIcon/>);      
-		setType('text');
-		}
-		else{
-		setIcon(<VisibilityOffIcon/>);     
-		setType('password');
-		}
-	}
+  const handleToggle = () => {
+    if (type === 'password') {
+      setIcon (<RemoveRedEyeIcon />);
+      setType ('text');
+    } else {
+      setIcon (<VisibilityOffIcon />);
+      setType ('password');
+    }
+  };
 
-  const { isFetching } = useSelector((state) => state.auth);
+  const {isFetching} = useSelector (state => state.auth);
 
-  const { message } = useSelector((state) => state.message);
+  const {message} = useSelector (state => state.message);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch ();
 
-  useEffect(() => {
-    dispatch(clearMessage());
-  }, [dispatch]);
+  useEffect (
+    () => {
+      dispatch (clearMessage ());
+    },
+    [dispatch]
+  );
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("This is not a valid email.")
-      .required("This field is required!"),
-    password: Yup.string()
-      .test(
-        "len",
-        "The password must be between 6 and 40 characters.",
-        (val) =>
-          val &&
-          val.toString().length >= 6 &&
-          val.toString().length <= 40
+  const validationSchema = Yup.object ().shape ({
+    email: Yup.string ()
+      .email ('This is not a valid email.')
+      .required ('This field is required!'),
+    password: Yup.string ()
+      .test (
+        'len',
+        'The password must be between 6 and 40 characters.',
+        val =>
+          val && val.toString ().length >= 6 && val.toString ().length <= 40
       )
-      .required("This field is required!"),
+      .required ('This field is required!'),
   });
 
-  const handleLogin = (formValue) => {
-    const { email, password } = formValue;
+  const handleLogin = formValue => {
+    const {email, password} = formValue;
 
-    dispatch(login({ email, password }))
-      .unwrap()
-      .then(() => {
-        navigate("/admin/dashboard/");
-        // window.location.reload();
-      })
+    dispatch (login ({email, password})).unwrap ().then (() => {
+      navigate ('/admin/dashboard/');
+      // window.location.reload();
+    });
   };
-
-
 
   return (
     <div className="login-form">
@@ -85,7 +81,7 @@ const Login = () => {
           validationSchema={validationSchema}
           onSubmit={handleLogin}
         >
-          <Form >
+          <Form>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <Field name="email" type="text" className="form-control" />
@@ -108,20 +104,19 @@ const Login = () => {
                 className="alert alert-danger"
               />
             </div>
-            {message && (
+            {message &&
               <div className="form-group">
                 <div className="alert-messager" role="alert">
                   {message}
                 </div>
-              </div>
-            )}
+              </div>}
 
             <div className="form-group">
-              <button type="submit" className=" btn-block" >
-                {isFetching ? (
-                  <img src={img} className="load__img"/>) : (<span>Login</span>)
-                }
-                
+              <button type="submit" className=" btn-block">
+                {isFetching
+                  ? <img src={img} className="load__img" />
+                  : <span>Login</span>}
+
               </button>
             </div>
           </Form>
